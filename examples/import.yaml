@@ -1,0 +1,17 @@
+action: migrate
+
+source:
+  file:
+    filename: ./registry.yaml
+
+sink:
+  topic:
+    seed: seed-redacted.redacted.fmc.prd.cloud.redpanda.com:9092
+    topic: _schemas
+    compatibility: BACKWARD
+    tls:
+      enabled: true
+    sasl:
+      username: redacted
+      password: redacted
+      mechanism: SCRAM-SHA-256

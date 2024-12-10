@@ -1,0 +1,13 @@
+action: migrate
+
+source:
+  rest:
+    url: https://schema-registry-redacted.redacted.fmc.prd.cloud.redpanda.com:30081
+    username: redacted
+    password: redacted
+    tls:
+      enabled: true
+
+sink:
+  file:
+    filename: ./registry.yaml

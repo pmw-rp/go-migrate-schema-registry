@@ -1,0 +1,17 @@
+action: validate
+
+sourceA:
+  rest:
+    url: http://green-0.green.green.svc.cluster.local:8081/
+    username: redacted
+    password: redacted
+    tls:
+      enabled: true
+
+sourceB:
+  rest:
+    url: http://blue-0.blue.blue.svc.cluster.local:8081/
+    username: redacted
+    password: redacted
+    tls:
+      enabled: true
