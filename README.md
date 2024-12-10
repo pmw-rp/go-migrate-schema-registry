@@ -10,6 +10,16 @@ This tool is designed to migrate schemas from one Schema Registry to another. It
 - Validate that a registry export is self-consistent (all references are available within the export)
 - Validate two registry sources to look for inconsistencies / missing elements by performing a diff
 
+## Compile and Run
+
+```bash
+$ go build .
+```
+
+```bash
+./go-schema-migrator --config config.yaml
+```
+
 ## Configuration
 
 There are two modes of operation: `migrate` and `validate`. Use `migrate` when copying schemas from a source to a sink.

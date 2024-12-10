@@ -2,6 +2,7 @@ package main
 
 import (
 	"crypto/tls"
+	"flag"
 	"fmt"
 	"github.com/knadh/koanf/parsers/yaml"
 	"github.com/knadh/koanf/providers/file"
@@ -12,6 +13,7 @@ import (
 	"github.com/twmb/franz-go/pkg/sasl/scram"
 	"github.com/twmb/franz-go/pkg/sr"
 	"github.com/twmb/tlscfg"
+	"os"
 
 	"log"
 	"maps"
@@ -190,7 +192,19 @@ func areEqual(a, b sr.SubjectVersion) bool {
 }
 
 func main() {
-	if err := config.Load(file.Provider("example.yaml"), yaml.Parser()); err != nil {
+
+	configFile := flag.String("config", "", "location of the config file to run")
+	flag.Parse()
+	if *configFile == "" {
+		_, err := fmt.Printf("Usage of %s:\n", os.Args[0])
+		if err != nil {
+			return
+		}
+		flag.PrintDefaults()
+		return
+	}
+
+	if err := config.Load(file.Provider(*configFile), yaml.Parser()); err != nil {
 		log.Fatalf("error loading config: %v", err)
 	}
 
