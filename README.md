@@ -42,8 +42,8 @@ sourceA:
     ...
   
 
-sinkB:
-  file:
+sourceB:
+  rest:
     ...
 ```
 
