@@ -118,9 +118,10 @@ sink:
 
 The following use cases are envisaged:
 
-- Export an existing registry to an intermediate file (see [export.yaml](./examples/export.yaml))
-- Import an intermediate file to a new registry (see [import.yaml](./examples/import.yaml))
-- Validate a new registry against an existing registry (see [validate.yaml](./examples/validate.yaml))
+- Export an existing registry to an intermediate file: [export.yaml](./examples/export.yaml)
+- Import an intermediate file to a new registry: [import.yaml](./examples/import.yaml)
+- Validate a new registry against an existing registry: [validate.yaml](./examples/validate.yaml)
+- Convert a V1 export into V2 (for using in a future import): [convert_v1.yaml](./examples/convert_v1.yaml)
 
 ## Possible Future Work
 

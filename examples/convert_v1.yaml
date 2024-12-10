@@ -1,0 +1,9 @@
+action: migrate
+
+source:
+  v1file:
+    filename: ./exported.schemas
+
+sink:
+  file:
+    filename: ./registry.yaml
