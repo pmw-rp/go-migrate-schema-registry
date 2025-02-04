@@ -139,6 +139,40 @@ func buildSource(path string) (Source, error) {
 	panic(fmt.Errorf("unknown source type: %v", sourceType))
 }
 
+func buildProcesses(path string) ([]Process, error) {
+
+	processes := make([]Process, 0)
+
+	s := config.Slices(path)
+	for _, conf := range s {
+		keys := slices.Collect(maps.Keys(conf.Raw()))
+		if len(keys) != 1 {
+			panic(0)
+		}
+		processType := keys[0]
+		var process Process
+		if processType == "remove_metadata" {
+			process = RemoveMetadataProcess{}
+		}
+		if processType == "add_metadata" {
+			process = AddMetadataProcess{}
+		}
+		if processType == "validate_metadata" {
+			process = ValidateMetadataProcess{}
+		}
+		if process == nil {
+			return nil, fmt.Errorf("unable to build process - %v", processType)
+		}
+		err := conf.Unmarshal(processType, &process)
+		if err != nil {
+			return nil, err
+		}
+		processes = append(processes, process)
+	}
+
+	return processes, nil
+}
+
 func buildSink(path string) (Sink, error) {
 	sinks := config.Get(path).(map[string]interface{})
 	if len(sinks) != 1 {
@@ -216,6 +250,11 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+		processes, err := buildProcesses("processes")
+		if err != nil {
+			panic(err)
+		}
+
 		sink, err := buildSink("sink")
 		if err != nil {
 			panic(err)
@@ -228,6 +267,14 @@ func main() {
 
 		state.sort()
 		state.validate()
+
+		for _, process := range processes {
+			state, err = process.Process(state)
+			if err != nil {
+				panic(err)
+			}
+			state.validate()
+		}
 
 		err = sink.PutState(state)
 		if err != nil {

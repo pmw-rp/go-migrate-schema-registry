@@ -133,6 +133,26 @@ The following use cases are envisaged:
 - Validate a new registry against an existing registry: [validate.yaml](./examples/validate.yaml)
 - Convert a V1 export into V2 (for using in a future import): [convert_v1.yaml](./examples/convert_v1.yaml)
 
+## Customisation
+
+The tool enables an export to be customised once loaded into memory by implementing the `Process` interface. One example
+of a process that can be performed is schema metadata removal to increase compatibility.
+
+### Adding a custom process
+
+Create a new Go file, with an implementation of the [process interface](process.go). Once that is added, modify
+[main.go](./main.go) to include your implementation in the list of available processes.
+
+### Configuring a custom process
+To configure a custom process, simply add the processes section the configuration file:
+
+```yaml
+processes:
+  - remove_metadata: {}
+```
+
+A full example can be seen in [examples/import_without_metadata.yaml](./examples/import_without_metadata.yaml).
+
 ## Possible Future Work
 
 - REST Sink, allowing migration without writing messages to the `_schemas` topic
