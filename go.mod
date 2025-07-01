@@ -8,7 +8,7 @@ require (
 	github.com/knadh/koanf/providers/file v1.1.2
 	github.com/knadh/koanf/v2 v2.1.2
 	github.com/twmb/franz-go v1.18.0
-	github.com/twmb/franz-go/pkg/sr v1.2.0
+	github.com/twmb/franz-go/pkg/sr v1.3.0
 	github.com/twmb/tlscfg v1.2.1
 	gopkg.in/yaml.v3 v3.0.1
 )

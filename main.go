@@ -180,16 +180,18 @@ func buildSink(path string) (Sink, error) {
 	}
 	sinkType := slices.Collect(maps.Keys(sinks))[0]
 
-	//if sinkType == "rest" {
-	//	config := RestSourceConfig{}
-	//	err := config.Unmarshal("source.rest", &config)
-	//	if err != nil {
-	//		panic(fmt.Errorf("unable to unmarshall rest source config"))
-	//	}
-	//	source := RestSource{}
-	//	source.Connect(config)
-	//	return &source
-	//}
+	if sinkType == "rest" {
+		sink := RestSink{}
+		err := config.Unmarshal(fmt.Sprintf("%v.rest", path), &sink)
+		if err != nil {
+			return nil, fmt.Errorf("unable to unmarshall rest source config")
+		}
+		err = sink.Connect()
+		if err != nil {
+			return nil, fmt.Errorf("unable to connect to rest sink: %w", err)
+		}
+		return &sink, nil
+	}
 
 	if sinkType == "file" {
 		sink := FileSink{}
